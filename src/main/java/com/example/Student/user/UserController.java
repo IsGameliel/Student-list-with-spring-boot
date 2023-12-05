@@ -34,8 +34,19 @@ public class UserController {
         return order.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notfound().build);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateOrder(@PathVariable Long id, @RequestBody User UpdateOrder){
-//        Optional<User> existingOrder = User
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateOrder(@PathVariable Long id, @RequestBody User UpdateOrder){
+        Optional<User> existingOrder = User.findById(id);
+        if(existingOrder.isPresent()){
+            User CurrentOrder = existingOrder.get();
+            currentOrder.setUsername(updateOrder.getUsername());
+            currentOrder.setEmail(updateOrder.getEmail());
+            currentOrder.setPhoneNumber(updateOrder.getPhoneNumber());
+            currentOrder.setStatus(updateOrder.getStatus());
+            UserRepository.save(currentOrder);
+            retrn ResponseEntity.ok(currentOrder);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
