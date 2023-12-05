@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User order){
-        order.setDateCreated(LocalDateTime.now());
+        order.setDateCreated(LocalDate.from(LocalDateTime.now()));
         return User.save(order);
     }
 
@@ -32,4 +33,9 @@ public class UserController {
         Optional<User> order = user = UserRepository.findById(id);
         return order.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notfound().build);
     }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<User> updateOrder(@PathVariable Long id, @RequestBody User UpdateOrder){
+//        Optional<User> existingOrder = User
+//    }
 }

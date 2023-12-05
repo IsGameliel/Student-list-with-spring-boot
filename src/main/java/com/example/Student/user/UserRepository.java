@@ -1,7 +1,10 @@
 package com.example.Student.user;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class UserRepository extends JpaRepository<User, Long> {
-    //
+@Repository
+public interface StudentRepository
+        extends JpaRepository<User, Long> {
+
 }
