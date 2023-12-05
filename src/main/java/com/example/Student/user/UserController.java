@@ -16,12 +16,14 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+//    this route will list all the user
     @GetMapping
     public List<User> listUser(){
         // will visit this shortly
         return UserRepository.findAll();
     }
 
+    // This will create new user
     @PostMapping
     public User create(@RequestBody User order){
         order.setDateCreated(LocalDate.from(LocalDateTime.now()));
@@ -34,6 +36,7 @@ public class UserController {
         return order.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notfound().build);
     }
 
+    // This route is used to update user
     @PutMapping("/{id}")
     public ResponseEntity<User> updateOrder(@PathVariable Long id, @RequestBody User UpdateOrder){
         Optional<User> existingOrder = User.findById(id);
@@ -50,6 +53,7 @@ public class UserController {
         }
     }
 
+    // this route is used to delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id){
         if(UserRepository.existsById(id)){
